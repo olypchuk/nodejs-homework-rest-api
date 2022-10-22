@@ -55,9 +55,6 @@ const updateContact = async (contactId, body) => {
   return newContact
   }
   
-
-
-
 module.exports = {
   listContacts,
   getContactById,
