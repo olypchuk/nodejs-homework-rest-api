@@ -1,9 +1,7 @@
-
 const { Schema, model } = require("mongoose")
 const Joi = require('joi');
-
-
-const regExp =/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+const {handleSaveErrors}= require("../helpers")
+const regExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 const contactsSchema = new Schema({
     name: {
@@ -28,10 +26,13 @@ const contactsSchema = new Schema({
 }, { versionKey: false, timestamps: true }
 )
 
+contactsSchema.post("save",handleSaveErrors)
 const Contact = model('contact', contactsSchema)
 
 const addSchema = Joi.object({
-    name:Joi.string().required(),
+    name: Joi.string().required().messages({
+        'any.required':"name is so important"
+    }),
     email:Joi.string().required(),
     phone: Joi.string().required(),
     favorite:Joi.boolean()
