@@ -19,10 +19,23 @@ const users = new Schema({
     type: String,
     default: null,
   },
+  // owner: {
+  //     type: Schema.ObjectId,
+  //     ref: 'user',
+  // }
+}, { versionKey: false, timestamps: true })
+
+const userSchema = Joi.object({
+  password: Joi.string().required(),
+  email: Joi.string().required(),
+  subscription: Joi.string(),
+  token: Joi.string(),
+  owner:Joi.object({}),
 })
 
 const User = model("user", users)
 
 module.exports = {
-    User
+  User,
+  userSchema
 }
