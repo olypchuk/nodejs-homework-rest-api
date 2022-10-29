@@ -1,5 +1,7 @@
 const { Schema, model } = require("mongoose")
 const Joi = require('joi');
+const { regExp } = require("./REGEXP")
+const {handleSaveErrors}=require("../helpers")
 const users = new Schema({
   password: {
     type: String,
@@ -25,13 +27,22 @@ const users = new Schema({
   // }
 }, { versionKey: false, timestamps: true })
 
-const userSchema = Joi.object({
-  password: Joi.string().required(),
-  email: Joi.string().required(),
+const addUser = Joi.object({
+  password: Joi.string().min(6).required(),
+  email: Joi.string().pattern(regExp).required(),
   subscription: Joi.string(),
   token: Joi.string(),
   owner:Joi.object({}),
 })
+const loginUser = Joi.object({
+  password: Joi.string().min(6).required(),
+  email: Joi.string().pattern(regExp).required(),
+})
+const userSchema = {
+  addUser,loginUser
+}
+
+users.post("save",handleSaveErrors)
 
 const User = model("user", users)
 
