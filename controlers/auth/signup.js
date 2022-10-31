@@ -13,7 +13,7 @@ const signup = async (req, res) => {
     const user = await User.create({ email,  password: hashPassword })
    
     // res.status(201).json({ email: user.email, password: user.password })
-  res.status(201).json( {
+  res.status(201).json({
   "user": { email: user.email, password: user.password }
 })
     
