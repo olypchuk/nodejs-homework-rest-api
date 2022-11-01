@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose")
 const Joi = require('joi');
 const {handleSaveErrors}= require("../helpers")
-const regExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+const {regExp} = require("./REGEXP")
 
 const contactsSchema = new Schema({
     name: {
@@ -22,7 +22,11 @@ const contactsSchema = new Schema({
         type: Boolean,
         default:false
     },
-
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+    //   required: true
+    }
 }, { versionKey: false, timestamps: true }
 )
 
