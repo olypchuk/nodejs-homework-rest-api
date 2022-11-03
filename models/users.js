@@ -21,10 +21,7 @@ const users = new Schema({
     type: String,
     default: null,
   },
-  // owner: {
-  //     type: Schema.ObjectId,
-  //     ref: 'user',
-  // }
+avatarURL: String,
 }, { versionKey: false, timestamps: true })
 
 const addUser = Joi.object({
