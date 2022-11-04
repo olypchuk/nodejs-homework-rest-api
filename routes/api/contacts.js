@@ -5,6 +5,8 @@ const { ctrlWrapper} = require('../../helpers')
 const {isValidId,validateBody,authentication}=require('../../middlewars')
 const {schema} = require('../../models/schema')
 
+
+
 router.get('/', authentication,ctrlWrapper(getAll));
 router.get('/:contactId',authentication, isValidId, ctrlWrapper(getById))
 router.post('/',authentication,validateBody(schema.addSchema),ctrlWrapper(add))
