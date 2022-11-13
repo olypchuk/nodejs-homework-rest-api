@@ -1,14 +1,14 @@
 const express = require("express")
 const router = express.Router()
-const { signup,login,current,logout,patchSubscription,updateAvatar } = require("../../controlers/auth")
+const { signup,login,current,logout,patchSubscription,updateAvatar ,verify,resendEmail} = require("../../controlers/auth")
 const { ctrlWrapper } = require("../../helpers")
 const { validateBody,authentication ,upload} = require("../../middlewars")
 const{userSchema}=require("../../models/users")
 
-
-
 router.post("/signup", validateBody(userSchema.addUser), ctrlWrapper(signup))
 router.post("/login", validateBody(userSchema.loginUser), ctrlWrapper(login))
+router.get('/verify/:verificationToken', ctrlWrapper(verify))
+router.post('/verify',validateBody(userSchema.verifyUser), ctrlWrapper(resendEmail))
 
 router.use(authentication)
 
